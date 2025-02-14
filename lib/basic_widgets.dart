@@ -45,7 +45,7 @@ class BasicWidgets extends StatelessWidget {
           ],),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
+            children:[
               ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
                   onPressed: (){},
