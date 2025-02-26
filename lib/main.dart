@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pdm6primeraapp/basic_widgets.dart';
+import 'package:pdm6primeraapp/travel_home_page.dart';
 
 void main() {
   runApp(
     MaterialApp(
       title: "Primer App",
-      home: BasicWidgets(),
+      home: TravelHomePage(),
     )
   );
 }
