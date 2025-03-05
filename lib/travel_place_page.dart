@@ -13,7 +13,12 @@ class TravelPlacePage extends StatelessWidget {
       height: size.height * .30,
       fit: BoxFit.cover,
     );
-
+    Widget imageSectionL = Image.asset(
+      'assets/img/montain.jpg',
+      width: size.width * .40,
+      height: size.height,
+      fit: BoxFit.cover,
+    );
     Widget titleSection = Padding(
         padding: EdgeInsets.all(32),
         child: Row(
@@ -33,15 +38,53 @@ class TravelPlacePage extends StatelessWidget {
           ],
         ),
     );
-
+    Widget buttonsSection = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildBtnColumn('CALL', Icons.call, Colors.blue),
+        _buildBtnColumn('ROUTE', Icons.near_me, Colors.blue),
+        _buildBtnColumn('SHARE', Icons.share, Colors.blue),
+      ],
+    );
+    Widget dscSection = Padding(
+      padding: EdgeInsets.all(32),
+      child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet nisi vel magna bibendum ultricies ac at nisl. Duis consectetur condimentum venenatis. Integer pellentesque porttitor tortor et placerat. Aenean quis dictum enim, eu sodales elit. Nulla facilisi. Vivamus placerat nisl a massa elementum, sit amet lacinia diam venenatis. Aliquam varius risus vitae tortor fringilla feugiat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non lectus accumsan, pulvinar neque ut, vulputate sem. Quisque maximus turpis vel ante iaculis laoreet. Integer lacinia orci sed leo feugiat hendrerit. Etiam pulvinar, sapien rhoncus vehicula pretium, metus dui pellentesque tellus, eu consequat lorem nibh a augue.'
+        'Aenean tincidunt tortor ut tristique porttitor. Quisque arcu metus, venenatis ac commodo pharetra, suscipit imperdiet est. Nunc vel fringilla arcu. Nullam bibendum, sapien in tristique lobortis, elit arcu vestibulum orci, non maximus lectus sapien sed nibh. Nam eget ultrices sem, sit amet auctor nisi. Integer mollis nibh magna, nec efficitur purus pulvinar vel. Aliquam nec congue sem, et molestie erat. Phasellus convallis scelerisque sapien, et molestie magna rhoncus id. Nunc suscipit urna eget lacus ultrices, nec accumsan augue consectetur.',softWrap: true, textAlign: TextAlign.justify,),
+    );
 
     return Scaffold(
-      body: Column(
-        children: [
-          imageSection,
-          titleSection
-        ],
-      ),
+      body: OrientationBuilder(
+          builder: (context, orientacion) {
+            if(orientacion == Orientation.portrait){
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    imageSection,
+                    titleSection,
+                    buttonsSection,
+                    dscSection
+                  ],
+                ),
+              );
+            }
+            return Row(
+              children: [
+                imageSectionL,
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        titleSection,
+                        buttonsSection,
+                        dscSection
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
+      )
     );
   }
 
