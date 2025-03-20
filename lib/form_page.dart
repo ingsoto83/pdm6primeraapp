@@ -9,6 +9,12 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
+  String? nombre = '';
+  String? aPaterno = '';
+  String? aMaterno = '';
+  String? correo = '';
+  String? pass = '';
+  bool visibilidad = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +34,8 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: TextFormField(
-                validator: (value)=> value!.isEmpty ? "Escribe tu(s) nombre(s)" : null
-                /*{
-                  if(value!.isEmpty){
-                    return "Escribe tu(s) nombre(s)";
-                  }
-                  return null;
-                }*/,
+                validator: (value)=> value!.isEmpty ? "Escribe tu(s) nombre(s)...!" : null,
+                onSaved: (value)=> nombre = value,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.account_circle),
                   labelText: 'Nombre(s)',
@@ -55,6 +56,8 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: TextFormField(
+                validator: (value)=> value!.isEmpty ? "Escribe tu apellido paterno...!" : null,
+                onSaved: (value)=> aPaterno = value,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.account_circle),
                   labelText: 'Apellido Paterno',
@@ -75,6 +78,8 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: TextFormField(
+                validator: (value)=> value!.isEmpty ? "Escribe tu apellido materno...!" : null,
+                onSaved: (value)=> aMaterno = value,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.account_circle),
                   labelText: 'Apellido Materno',
@@ -95,6 +100,8 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: TextFormField(
+                validator: (value)=> value!.isEmpty ? "Escribe tu correo electrónico...!" : null,
+                onSaved: (value)=> correo = value,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   labelText: 'Correo Electrónico',
@@ -115,9 +122,19 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: TextFormField(
-                obscureText: true,
+                validator: (value)=> value!.isEmpty ? "Escribe tu contraseña...!" : value.length < 6 ? 'Contraseña debe ser de 6 cars mínimo...!' : null,
+                onSaved: (value)=> pass = value,
+                obscureText: visibilidad ? false : true,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.password),
+                  suffixIcon: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        visibilidad = !visibilidad;
+                      });
+                    },
+                    child: Icon(visibilidad ? Icons.visibility_off : Icons.visibility)
+                  ),
                   labelText: 'Contraseña',
                   labelStyle: TextStyle(color: Colors.blue),
                   isDense: true,
@@ -137,7 +154,9 @@ class _FormPageState extends State<FormPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    _formKey.currentState!.reset();
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueGrey,
                       foregroundColor: Colors.white
@@ -146,7 +165,11 @@ class _FormPageState extends State<FormPage> {
                 ),
                 ElevatedButton(
                   onPressed: (){
-                    _formKey.currentState!.validate();
+                    if(_formKey.currentState!.validate()){
+                      print(nombre);
+                      _formKey.currentState!.save();
+                      print(nombre);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
